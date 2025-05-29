@@ -189,6 +189,7 @@ button {
 
 .card__name {
   font-size: 1em;
+  margin-left: 2%;
 }
 
 /* End product list card */
@@ -210,6 +211,7 @@ button {
   font-size: var(--small-font);
   /* max-height: 120px; */
   align-items: center;
+  width: 100%;
 }
 
 .cart-card__image {
