@@ -38,3 +38,49 @@ export function renderListWithTemplate(template, parentElement, list, position =
   }
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
+
+export function renderWithTemplate(template, parentElement, data, callback) {
+  parentElement.innerHTML = template;
+  if(callback) {
+    callback(data);
+  }
+  getLevelsDeep(parentElement);
+}
+
+export async function loadTemplate(path) {
+  const response = await fetch(path);
+  return await response.text();
+}
+
+function getLevelsDeep(element) {
+  const levelDeep = location.pathname
+    .split('/')
+    .filter(part => part && part !== 'src').length - 1;
+    adjustRelativePaths(element, levelDeep);
+}
+
+function adjustRelativePaths(container, levelsDeep) {
+  const prefix = '../'.repeat(levelsDeep);
+  container.querySelectorAll('img[data-src]').forEach(img => {
+    img.src = prefix + img.getAttribute('data-src');
+  });
+}
+
+export async function loadHeaderFooter() {
+  const headerTemplate = await loadTemplate(getTemplatePath("public/partials/header.html"));
+  const header = document.querySelector("header");
+  renderWithTemplate(headerTemplate, header);
+
+  const footerTemplate = await loadTemplate(getTemplatePath("public/partials/footer.html"));
+  const footer = document.querySelector("footer");
+  renderWithTemplate(footerTemplate, footer);
+}
+
+function getTemplatePath(pathFromSrc) {
+  const levelsDeep = location.pathname
+    .split('/')
+    .filter(part => part && part !== 'src').length - 1;
+
+  const prefix = '../'.repeat(levelsDeep);
+  return `${prefix}${pathFromSrc}`;
+}
