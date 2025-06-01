@@ -1,4 +1,8 @@
-import { getLocalStorage, setLocalStorage, loadHeaderFooter } from "./utils.mjs";
+import {
+  getLocalStorage,
+  setLocalStorage,
+  loadHeaderFooter,
+} from "./utils.mjs";
 
 loadHeaderFooter();
 
@@ -9,14 +13,15 @@ function renderCartContents() {
   // New function to remove an item from the cart
   const excludeButton = document.querySelectorAll(".cart-card__button");
 
-  excludeButton.forEach(button => {
-      button.addEventListener("click", (event) => {
-          const itemId = event.currentTarget.dataset.itemId;
-          removeItem(itemId);
+  excludeButton.forEach((button) => {
+    button.addEventListener("click", (event) => {
+      const itemId = event.currentTarget.dataset.itemId;
+      removeItem(itemId);
     });
-});
+  });
 }
 
+// Change to show the quantity of the item
 function cartItemTemplate(item) {
   const productImageSrc = item.Images.PrimaryMedium;
 
@@ -31,7 +36,7 @@ function cartItemTemplate(item) {
     <h2 class="card__name">${item.Name}</h2>
   </a>
   <p class="cart-card__color">${item.Colors[0].ColorName}</p>
-  <p class="cart-card__quantity">qty: 1</p>
+  <p class="cart-card__quantity">qty: ${item.quantity || 1}</p>
   <p class="cart-card__price">$${item.FinalPrice}</p>
   <button class="cart-card__button" data-item-id="${item.Id}"><img src="../images/red_trash_bin.webp" alt="bin"></button>
 </li>`;
@@ -43,7 +48,7 @@ renderCartContents();
 
 function removeItem(itemId) {
   let cartItems = getLocalStorage("so-cart") || [];
-  let index = cartItems.findIndex(item => item.Id === itemId);
+  let index = cartItems.findIndex((item) => item.Id === itemId);
   cartItems.splice(index, 1);
   setLocalStorage("so-cart", cartItems);
   renderCartContents();
