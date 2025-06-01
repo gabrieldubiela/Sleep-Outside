@@ -1,7 +1,7 @@
 import { resolve } from "path";
 import { defineConfig } from "vite";
 
-const GITHUB_REPO_NAME = 'sleepOutside';
+const GITHUB_REPO_NAME = 'sleepoutside';
 
 export default defineConfig(({ command, mode }) => {
   let baseConfig = '/';
