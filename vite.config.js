@@ -1,19 +1,18 @@
 import { resolve } from "path";
 import { defineConfig } from "vite";
 
-const GITHUB_REPO_NAME = 'sleepoutside';
+const GITHUB_REPO_NAME = 'sleepoutside'; // Confirmed correct from your URL
 
 export default defineConfig(({ command, mode }) => {
   let baseConfig = '/';
 
+  // If building on Netlify (indicated by environment variable)
   if (process.env.NETLIFY === 'true') {
     baseConfig = '/';
-  } else if (process.env.GITHUB_PAGES === 'true') {
+  }
+  // If it's a build command (e.g., 'npm run build') and not Netlify, assume GitHub Pages
+  else if (command === 'build') {
     baseConfig = `/${GITHUB_REPO_NAME}/`;
-  } else if (process.env.NODE_ENV === 'production' && process.env.CI_ENVIRONMENT === 'github_pages') {
-      baseConfig = `/${GITHUB_REPO_NAME}/`;
-  } else if (command === 'build') {
-    baseConfig = '/';
   }
 
   return {
