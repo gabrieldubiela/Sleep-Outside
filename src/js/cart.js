@@ -18,10 +18,12 @@ function renderCartContents() {
 }
 
 function cartItemTemplate(item) {
+  const productImageSrc = item.Images.PrimaryMedium;
+
   const newItem = `<li class="cart-card divider">
   <a href="#" class="cart-card__image">
     <img
-      src="${item.Image}"
+      src="${productImageSrc}"
       alt="${item.Name}"
     />
   </a>
@@ -31,7 +33,7 @@ function cartItemTemplate(item) {
   <p class="cart-card__color">${item.Colors[0].ColorName}</p>
   <p class="cart-card__quantity">qty: 1</p>
   <p class="cart-card__price">$${item.FinalPrice}</p>
-  <button class="cart-card__button" data-item-id="${item.Id}"><img src="../public/images/red_trash_bin.webp" alt="bin"></button>
+  <button class="cart-card__button" data-item-id="${item.Id}"><img src="../images/red_trash_bin.webp" alt="bin"></button>
 </li>`;
 
   return newItem;

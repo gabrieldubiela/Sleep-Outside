@@ -28,6 +28,7 @@ export default class ProductList {
       .join(' ');
 
     document.querySelector(".title").textContent = capitalizedCategory;
+    this.renderList(list);
   }
 
   renderList(list) {
