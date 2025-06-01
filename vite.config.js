@@ -3,7 +3,7 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   root: "src/",
-  base: process.env.VITE_BUILD_BASE === 'github' ? '/sleepoutside/' : '/',
+
   build: {
     outDir: "../dist",
     rollupOptions: {
