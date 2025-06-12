@@ -8,24 +8,28 @@ loadHeaderFooter();
 
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart");
-  const htmlItems = cartItems.map((item) => cartItemTemplate(item));
+  // Define productListElement aqui para que esteja disponível em todo o escopo da função
+  const productListElement = document.querySelector(".product-list");
   const listFooterElement = document.querySelector(".list-footer");
   const listTotalElement = document.querySelector(".list-total");
-  document.querySelector(".product-list").innerHTML = htmlItems.join("");
+
+  // Limpa o conteúdo anterior para evitar duplicações se renderCartContents for chamada várias vezes
+  productListElement.innerHTML = "";
+
   if (cartItems && cartItems.length > 0) {
     const htmlItems = cartItems.map((item) => cartItemTemplate(item));
     productListElement.innerHTML = htmlItems.join("");
 
-    // Calculate the total of all items in the cart
+    // Calcula o total de todos os itens no carrinho
     const totalAmount = cartItems.reduce((sum, item) => sum + item.FinalPrice, 0);
 
-    // Display the total amount
+    // Exibe o valor total
     listTotalElement.innerText = `$${totalAmount.toFixed(2)}`;
 
-    // Show the footer section (remove the 'hide' class)
+    // Mostra a seção do rodapé (remove a classe 'hide')
     listFooterElement.classList.remove("hide");
 
-    // Add event listeners for remove buttons
+    // Adiciona event listeners para os botões de remover
     const excludeButtons = document.querySelectorAll(".cart-card__button");
     excludeButtons.forEach((button) => {
       button.addEventListener("click", (event) => {
@@ -34,9 +38,9 @@ function renderCartContents() {
       });
     });
   } else {
-    // If the cart is empty, display a message and hide the footer
+    // Se o carrinho estiver vazio, exibe uma mensagem e oculta o rodapé
     productListElement.innerHTML = "<p>Seu carrinho está vazio.</p>";
-    listFooterElement.classList.add("hide"); // Ensure footer is hidden if cart is empty
+    listFooterElement.classList.add("hide"); // Garante que o rodapé esteja oculto se o carrinho estiver vazio
   }
 }
 
