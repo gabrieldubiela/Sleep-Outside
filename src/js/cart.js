@@ -9,16 +9,35 @@ loadHeaderFooter();
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart");
   const htmlItems = cartItems.map((item) => cartItemTemplate(item));
+  const listFooterElement = document.querySelector(".list-footer");
+  const listTotalElement = document.querySelector(".list-total");
   document.querySelector(".product-list").innerHTML = htmlItems.join("");
-  // New function to remove an item from the cart
-  const excludeButton = document.querySelectorAll(".cart-card__button");
+  if (cartItems && cartItems.length > 0) {
+    const htmlItems = cartItems.map((item) => cartItemTemplate(item));
+    productListElement.innerHTML = htmlItems.join("");
 
-  excludeButton.forEach((button) => {
-    button.addEventListener("click", (event) => {
-      const itemId = event.currentTarget.dataset.itemId;
-      removeItem(itemId);
+    // Calculate the total of all items in the cart
+    const totalAmount = cartItems.reduce((sum, item) => sum + item.FinalPrice, 0);
+
+    // Display the total amount
+    listTotalElement.innerText = `$${totalAmount.toFixed(2)}`;
+
+    // Show the footer section (remove the 'hide' class)
+    listFooterElement.classList.remove("hide");
+
+    // Add event listeners for remove buttons
+    const excludeButtons = document.querySelectorAll(".cart-card__button");
+    excludeButtons.forEach((button) => {
+      button.addEventListener("click", (event) => {
+        const itemId = event.currentTarget.dataset.itemId;
+        removeItem(itemId);
+      });
     });
-  });
+  } else {
+    // If the cart is empty, display a message and hide the footer
+    productListElement.innerHTML = "<p>Seu carrinho está vazio.</p>";
+    listFooterElement.classList.add("hide"); // Ensure footer is hidden if cart is empty
+  }
 }
 
 // Change to show the quantity of the item
