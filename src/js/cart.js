@@ -8,28 +8,23 @@ loadHeaderFooter();
 
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart");
-  // Define productListElement aqui para que esteja disponível em todo o escopo da função
   const productListElement = document.querySelector(".product-list");
   const listFooterElement = document.querySelector(".list-footer");
   const listTotalElement = document.querySelector(".list-total");
 
-  // Limpa o conteúdo anterior para evitar duplicações se renderCartContents for chamada várias vezes
   productListElement.innerHTML = "";
 
   if (cartItems && cartItems.length > 0) {
     const htmlItems = cartItems.map((item) => cartItemTemplate(item));
     productListElement.innerHTML = htmlItems.join("");
-
-    // Calcula o total de todos os itens no carrinho
-    const totalAmount = cartItems.reduce((sum, item) => sum + item.FinalPrice, 0);
-
-    // Exibe o valor total
+    const totalAmount = cartItems.reduce(
+      (sum, item) => sum + item.FinalPrice,
+      0,
+    );
     listTotalElement.innerText = `$${totalAmount.toFixed(2)}`;
-
-    // Mostra a seção do rodapé (remove a classe 'hide')
     listFooterElement.classList.remove("hide");
 
-    // Adiciona event listeners para os botões de remover
+    // change to remove itens
     const excludeButtons = document.querySelectorAll(".cart-card__button");
     excludeButtons.forEach((button) => {
       button.addEventListener("click", (event) => {
@@ -38,9 +33,8 @@ function renderCartContents() {
       });
     });
   } else {
-    // Se o carrinho estiver vazio, exibe uma mensagem e oculta o rodapé
-    productListElement.innerHTML = "<p>Seu carrinho está vazio.</p>";
-    listFooterElement.classList.add("hide"); // Garante que o rodapé esteja oculto se o carrinho estiver vazio
+    productListElement.innerHTML = "<p>Your cart is empty.</p>";
+    listFooterElement.classList.add("hide");
   }
 }
 
