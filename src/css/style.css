@@ -311,6 +311,72 @@ button {
   object-fit: contain;
 }
 
+.newsletter-box {
+  background-color: var(--light-grey);
+  padding: 2em;
+  margin: 2em auto;
+  max-width: 600px;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.newsletter-box h2 {
+  color: var(--dark-grey);
+  margin-bottom: 0.5em;
+}
+
+.newsletter-box p {
+  color: var(--dark-grey);
+  margin-bottom: 1em;
+  font-size: var(--small-font);
+  padding: 0; 
+}
+
+.newsletter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  align-items: center;
+}
+
+.newsletter-form input[type="email"] {
+  padding: 0.8em 1em;
+  border: 1px solid var(--dark-grey);
+  border-radius: 4px;
+  width: 100%;
+  max-width: 300px; 
+  font-size: var(--font-base);
+}
+
+.newsletter-form button {
+  width: 100%;
+  max-width: 150px; 
+  padding: 0.8em 1em;
+  border-radius: 4px;
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: var(--large-font);
+  transition: background-color 0.3s ease;
+}
+
+.newsletter-form button:hover {
+  background-color: var(--tertiary-color);
+}
+
+.newsletter-success-message {
+  color: var(--secondary-color);
+  margin-top: 1em;
+  font-weight: bold;
+  padding: 0; 
+}
+
+.hide {
+  display: none;
+}
+
 @media screen and (min-width: 500px) {
   body {
     max-width: 1080px;
@@ -324,6 +390,15 @@ button {
   .cart-card {
     font-size: inherit;
     grid-template-columns: 150px 248px 70px 22px;
+  }
+
+  .newsletter-form {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .newsletter-form input[type="email"] {
+    flex-grow: 1; 
   }
 }
 
